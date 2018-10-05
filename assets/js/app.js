@@ -156,18 +156,18 @@ $(document).ready(function () {
         }, 3000);
 
 
-    }
+        // }
 
-    $("#reset").on("click", function () {
-        $("#reset").hide();
-        $("#answers").empty();
-        $("#questions").empty();
-        for (var i = 0; i < holder.length; i++) {
-            options.push(holder[i]);
-        }
-        runTimer();
-        displayQuestion();
+        // $("#reset").on("click", function () {
+        //     $("#reset").hide();
+        //     $("#answers").empty();
+        //     $("#questions").empty();
+        //     for (var i = 0; i < holder.length; i++) {
+        //         options.push(holder[i]);
+        //     }
+        //     runTimer();
+        //     displayQuestion();
 
-    })
+        // })
 
-});
+    });
