@@ -13,7 +13,7 @@ $(document).ready(function () {
     var holder = [];
 
 
-    var options = [
+    var questionArr = [
         {
             question: "Which of the following movies was not filmed in Chicago?",
             choice: ["A League of their Own", "American Gangster", "Ferris Bueller", "The Fugitive"],
@@ -53,8 +53,8 @@ $(document).ready(function () {
         $("#start").hide();
         displayQuestion();
         runTimer();
-        for (var i = 0; i < options.length; i++) {
-            holder.push(options[i]);
+        for (var i = 0; i < questionArr.length; i++) {
+            holder.push(questionArr[i]);
         }
     })
     //timer start
@@ -74,100 +74,81 @@ $(document).ready(function () {
             unanswerCount++;
             stop();
             $("#answers").html("<p>Time is up! The correct answer is: " + pick.choice[pick.answer] + "</p>");
-            hidepicture();
-        }
-    }
+
+            console.log(timer);
+
+        };
+    };
 
     //timer stop
     function stop() {
         running = false;
         clearInterval(intervalId);
-    }
+    };
 
     function displayQuestion() {
+        for (var i = 0; i < questionArr.length; i++) {
+            console.log(questionArr[i]);
 
-        index = Math.floor(Math.random() * options.length);
-        pick = options[index];
+            $("#questions").html("<h2>" + questionArr[i].question + "</h2>");
+        };
+        // Here is where I needed to append my choices to the dom
 
 
-        $("#questions").html("<h2>" + pick.question + "</h2>");
-        for (var i = 0; i < pick.choice.length; i++) {
-            var userChoice = $("<div>");
-            userChoice.addClass("answerchoice");
-            userChoice.html(pick.choice[i]);
 
-            userChoice.attr("data-guessvalue", i);
-            $("#answers").append(userChoice);
-            //		}
-        }
-
-        var qCount = options.length;
-
-        $(".answerchoice").on("click", function () {
+        $("#answers").on("click", function () {
 
             userGuess = parseInt($(this).attr("data-guessvalue"));
 
 
-            if (userGuess === pick.answer) {
+            if (userGuess === answer) {
                 stop();
                 correctCount++;
                 userGuess = "";
                 $("#answers").html("<p>Correct!</p>");
-                hidepicture();
+
 
             } else {
                 stop();
                 wrongCount++;
                 userGuess = "";
-                $("#answers").html("<p>Wrong! The correct answer is: " + pick.choice[pick.answer] + "</p>");
+                $("#answers").html("<p>Wrong! The correct answer is: " + choice[answer] + "</p>");
 
             }
         })
-    }
+    };
 
-    //add pictures here
+    function endGame() {
 
-    function hidepicture() {
-        $("#answers").append("<img src=" + pick.photo + ">");
-        newArray.push(pick);
-        options.splice(index, 1);
+        if ((wrongCount + correctCount + unanswerCount) === qCount) {
+            $("#questions").empty();
+            $("#questions").html("<h3>Game Over!  Here's how you did: </h3>");
+            $("#answers").append("<h4> Correct: " + correctCount + "</h4>");
+            $("#answers").append("<h4> Incorrect: " + wrongCount + "</h4>");
+            $("#answers").append("<h4> Unanswered: " + unanswerCount + "</h4>");
+            $("#reset").show();
+            correctCount = 0;
+            wrongCount = 0;
+            unanswerCount = 0;
 
-        var hidpic = setTimeout(function () {
-            $("#answers").empty();
-            timer = 20;
+        } else {
+            runTimer();
+            displayQuestion();
 
+        }
+    };
 
-            if ((wrongCount + correctCount + unanswerCount) === qCount) {
-                $("#questions").empty();
-                $("#questions").html("<h3>Game Over!  Here's how you did: </h3>");
-                $("#answers").append("<h4> Correct: " + correctCount + "</h4>");
-                $("#answers").append("<h4> Incorrect: " + wrongCount + "</h4>");
-                $("#answers").append("<h4> Unanswered: " + unanswerCount + "</h4>");
-                $("#reset").show();
-                correctCount = 0;
-                wrongCount = 0;
-                unanswerCount = 0;
+    // $("#reset").on("click", function () {
+    //     $("#reset").hide();
+    //     $("#answers").empty();
+    //     $("#questions").empty();
+    //     for (var i = 0; i < holder.length; i++) {
+    //        questionArr.push(holder[i]);
+    //     }
+    //     runTimer();
+    //     displayQuestion();
 
-            } else {
-                runTimer();
-                displayQuestion();
+    // })
 
-            }
-        }, 3000);
+});
 
-
-        // }
-
-        // $("#reset").on("click", function () {
-        //     $("#reset").hide();
-        //     $("#answers").empty();
-        //     $("#questions").empty();
-        //     for (var i = 0; i < holder.length; i++) {
-        //         options.push(holder[i]);
-        //     }
-        //     runTimer();
-        //     displayQuestion();
-
-        // })
-
-    });
