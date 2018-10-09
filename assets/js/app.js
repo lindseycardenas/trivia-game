@@ -55,15 +55,15 @@ $(document).ready(function () {
         runTimer();
         for (var i = 0; i < questionArr.length; i++) {
             holder.push(questionArr[i]);
-        }
-    })
+        };
+    });
     //timer start
     function runTimer() {
         if (!running) {
             intervalId = setInterval(decrement, 1000);
             running = true;
-        }
-    }
+        };
+    };
     //timer countdown
     function decrement() {
         $("#timeleft").html("<h3>Time remaining: " + timer + "</h3>");
@@ -73,7 +73,7 @@ $(document).ready(function () {
         if (timer === 0) {
             unanswerCount++;
             stop();
-            $("#answers").html("<p>Time is up! The correct answer is: " + pick.choice[pick.answer] + "</p>");
+            $("#answers").html("<p>Time is up! The correct answer is: " + choice[answer] + "</p>");
 
             console.log(timer);
 
@@ -93,30 +93,50 @@ $(document).ready(function () {
             $("#questions").html("<h2>" + questionArr[i].question + "</h2>");
         };
         // Here is where I needed to append my choices to the dom
-
-
-
-        $("#answers").on("click", function () {
-
-            userGuess = parseInt($(this).attr("data-guessvalue"));
-
-
-            if (userGuess === answer) {
-                stop();
-                correctCount++;
-                userGuess = "";
-                $("#answers").html("<p>Correct!</p>");
-
-
-            } else {
-                stop();
-                wrongCount++;
-                userGuess = "";
-                $("#answers").html("<p>Wrong! The correct answer is: " + choice[answer] + "</p>");
-
-            }
-        })
     };
+    function displayAnswers() {
+        for (var i = 0; i < questionsArr.length; i++) {
+            console.log(questionArr[i].choice[0]);
+            // var answers = $("<button>")
+            // answers.html(questions[currentQuestion].choice[i])
+            // answers.addClass("answer-buttons")
+            // answers.attr("value", questions[currentQuestion].values[i])
+            // answers.attr("id", "a" + i)
+            // answers.appendTo(questionArea)
+            $("#answers").html("<h2>" + questionArr[i].choice[0] + "</h2>");
+            $("#answers").html("<h2>" + questionArr[i].choice[1] + "</h2>");
+            $("#answers").html("<h2>" + questionArr[i].choice[2] + "</h2>");
+            $("#answers").html("<h2>" + questionArr[i].choice[3] + "</h2>");
+
+        };
+    };
+
+    // var answerBtn = $("<button>");
+    // answerBtn.text(questionArr.choice);
+    // console.log(answerBtn);
+
+    $("#answers").on("click", function () {
+
+        userGuess = parseInt($(this).attr("data-guessvalue"));
+
+
+        if (userGuess === answer) {
+            stop();
+            correctCount++;
+            userGuess = "";
+            $("#answers").html("<p>Correct!</p>");
+
+
+        } else {
+            stop();
+            wrongCount++;
+            userGuess = "";
+            $("#answers").html("<p>Wrong! The correct answer is: " + choice[answer] + "</p>");
+
+        };
+    });
+
+
 
     function endGame() {
 
@@ -151,4 +171,7 @@ $(document).ready(function () {
     // })
 
 });
+
+
+
 
