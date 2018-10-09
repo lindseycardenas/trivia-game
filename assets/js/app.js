@@ -7,11 +7,6 @@ $(document).ready(function () {
     var intervalId;
     var userGuess = "";
     var running = false;
-    var pick;
-    var index;
-    var newArray = [];
-    var holder = [];
-
 
     var questionArr = [
         {
@@ -53,9 +48,9 @@ $(document).ready(function () {
         $("#start").hide();
         displayQuestion();
         runTimer();
-        for (var i = 0; i < questionArr.length; i++) {
-            holder.push(questionArr[i]);
-        };
+        // for (var i = 0; i < questionArr.length; i++) {
+        //     holder.push(questionArr[i]);
+        // };
     });
     //timer start
     function runTimer() {
@@ -73,7 +68,7 @@ $(document).ready(function () {
         if (timer === 0) {
             unanswerCount++;
             stop();
-            $("#answers").html("<p>Time is up! The correct answer is: " + choice[answer] + "</p>");
+            $("#answers").html("<p>Time is up! The correct answer is: " + questionArr.answer + "</p>");
 
             console.log(timer);
 
@@ -97,12 +92,7 @@ $(document).ready(function () {
     function displayAnswers() {
         for (var i = 0; i < questionsArr.length; i++) {
             console.log(questionArr[i].choice[0]);
-            // var answers = $("<button>")
-            // answers.html(questions[currentQuestion].choice[i])
-            // answers.addClass("answer-buttons")
-            // answers.attr("value", questions[currentQuestion].values[i])
-            // answers.attr("id", "a" + i)
-            // answers.appendTo(questionArea)
+
             $("#answers").html("<h2>" + questionArr[i].choice[0] + "</h2>");
             $("#answers").html("<h2>" + questionArr[i].choice[1] + "</h2>");
             $("#answers").html("<h2>" + questionArr[i].choice[2] + "</h2>");
@@ -111,9 +101,7 @@ $(document).ready(function () {
         };
     };
 
-    // var answerBtn = $("<button>");
-    // answerBtn.text(questionArr.choice);
-    // console.log(answerBtn);
+    //when a user guesses the answer, tell them if they're wrong or right
 
     $("#answers").on("click", function () {
 
@@ -154,21 +142,22 @@ $(document).ready(function () {
         } else {
             runTimer();
             displayQuestion();
-
+            displayAnswers();
         }
     };
 
-    // $("#reset").on("click", function () {
-    //     $("#reset").hide();
-    //     $("#answers").empty();
-    //     $("#questions").empty();
-    //     for (var i = 0; i < holder.length; i++) {
-    //        questionArr.push(holder[i]);
-    //     }
-    //     runTimer();
-    //     displayQuestion();
+    $("#reset").on("click", function () {
+        $("#reset").hide();
+        $("#answers").empty();
+        $("#questions").empty();
+        for (var i = 0; i < holder.length; i++) {
+            questionArr.push(holder[i]);
+        }
+        runTimer();
+        displayQuestion();
+        displayAnswers();
 
-    // })
+    })
 
 });
 
